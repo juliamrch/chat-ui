@@ -6,6 +6,7 @@ import type { ObjectId } from "mongodb";
 import { getContext, setContext } from "svelte";
 import { type Writable, writable, get } from "svelte/store";
 
+export const showCESDKModal = writable(false);
 type SettingsStore = {
 	shareConversationsWithModelAuthors: boolean;
 	hideEmojiOnSidebar: boolean;

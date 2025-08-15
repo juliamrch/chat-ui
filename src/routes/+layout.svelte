@@ -23,6 +23,8 @@
 	import Search from "$lib/components/chat/Search.svelte";
 	import { setContext } from "svelte";
 	import { handleResponse, useAPIClient } from "$lib/APIClient";
+	import CESDKModal from '$lib/components/CESDKModal.svelte';
+  	import { showCESDKModal } from '$lib/stores/cesdk';
 
 	let { data = $bindable(), children } = $props();
 
@@ -222,6 +224,10 @@
 	<OverloadedModal onClose={() => (overloadedModalOpen = false)} />
 {/if}
 
+{#if $showCESDKModal}
+  <CESDKModal />
+{/if}
+
 <Search />
 
 <div
@@ -263,4 +269,5 @@
 		<Toast message={currentError} />
 	{/if}
 	{@render children?.()}
+
 </div>

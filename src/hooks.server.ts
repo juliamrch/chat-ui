@@ -172,7 +172,9 @@ export const handle: Handle = async ({ event, resolve }) => {
 		);
 	}
 
+	// Disable authentication and modal checks in development
 	if (
+		!dev &&
 		!event.url.pathname.startsWith(`${base}/login`) &&
 		!event.url.pathname.startsWith(`${base}/admin`) &&
 		!event.url.pathname.startsWith(`${base}/settings`) &&
@@ -249,6 +251,38 @@ export const handle: Handle = async ({ event, resolve }) => {
 			allowedOrigin = "*"; // allow all origins
 		} else if (allowedOrigin === requestOrigin) {
 			allowedOrigin = requestOrigin; // echo back the caller
+		}
+
+		// Disable authentication and modal checks in development for API routes
+		if (
+			!dev &&
+			!event.url.pathname.startsWith(`${base}/login`) &&
+			!event.url.pathname.startsWith(`${base}/admin`) &&
+			!event.url.pathname.startsWith(`${base}/settings`) &&
+			!["GET", "OPTIONS", "HEAD"].includes(event.request.method)
+		) {
+			if (
+				!event.locals.user &&
+				requiresUser &&
+				!((config.MESSAGES_BEFORE_LOGIN ? parseInt(config.MESSAGES_BEFORE_LOGIN) : 0) > 0)
+			) {
+				return errorResponse(401, ERROR_MESSAGES.authOnly);
+			}
+
+			if (
+				!requiresUser &&
+				!event.url.pathname.startsWith(`${base}/settings`) &&
+				config.PUBLIC_APP_DISCLAIMER === "1"
+			) {
+				const hasAcceptedEthicsModal = await collections.settings.countDocuments({
+					sessionId: event.locals.sessionId,
+					ethicsModalAcceptedAt: { $exists: true },
+				});
+
+				if (!hasAcceptedEthicsModal) {
+					return errorResponse(405, "You need to accept the welcome modal first");
+				}
+			}
 		}
 
 		if (allowedOrigin) {

@@ -8,6 +8,7 @@
 </script>
 
 <script lang="ts">
+	import { showCESDKModal } from '$lib/stores/cesdk';
 	import { base } from "$app/paths";
 
 	import Logo from "$lib/components/icons/Logo.svelte";
@@ -232,7 +233,20 @@
 		</a>
 	{/if}
 
+
+
 	<span class="flex flex-row-reverse gap-1 md:flex-row">
+		<a
+  href="{base}/cesdk"
+  onclick={(e) => {
+    e.preventDefault();
+    showCESDKModal.set(true);
+  }}
+  class="flex h-9 flex-none items-center gap-1.5 rounded-lg pl-2.5 pr-2 text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700"
+>
+  Open CESDK
+</a>
+
 		<a
 			href="{base}/settings"
 			class="flex h-9 flex-none flex-grow items-center gap-1.5 rounded-lg pl-2.5 pr-2 text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700"
