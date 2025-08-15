@@ -1,5 +1,9 @@
 # Chat UI
 
+This version integrates CE.SDK editor as part of tests with SvelteKit.
+
+![Demo](assets/chat-ui-cedsk.mp4)
+
 **Find the docs at [hf.co/docs/chat-ui](https://huggingface.co/docs/chat-ui/index).**
 
 ![Chat UI repository thumbnail](https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/chatui-websearch.png)
