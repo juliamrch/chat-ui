@@ -2,7 +2,7 @@
 
 This version integrates CE.SDK editor as part of tests with SvelteKit.
 
-![Demo](assets/chat-ui-cedsk.mp4)
+![video](assets/chat-ui-demo.gif)
 
 **Find the docs at [hf.co/docs/chat-ui](https://huggingface.co/docs/chat-ui/index).**
 
